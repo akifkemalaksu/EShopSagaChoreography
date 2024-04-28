@@ -1,4 +1,4 @@
-﻿namespace Stock.API.IntegrationEvents.Events
+﻿namespace Stock.API.IntegrationEvents.Messages
 {
     public class OrderItemMessage
     {

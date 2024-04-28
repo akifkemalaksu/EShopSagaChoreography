@@ -2,8 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Common.Extensions;
 using EventBus.RabbitMQ.Extensions;
 using Stock.API.Contexts;
-using Stock.API.IntegrationEvents.Events;
 using Stock.API.IntegrationEvents.EventHandlers;
+using Stock.API.IntegrationEvents.InEvents;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,8 +16,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseInMemoryDatabase("StockDb");
-});
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+}, contextLifetime: ServiceLifetime.Transient, optionsLifetime: ServiceLifetime.Transient);
 
 builder.Services.ConfigureCQRSServices();
 
@@ -44,70 +44,64 @@ app.MapGet("/", () => "Hello");
 using var scope = app.Services.CreateScope();
 
 var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-
-context.Stocks.AddRange(new List<Stock.API.Models.Stock>
+if (!context.Stocks.Any())
 {
-    new()
+    context.Stocks.AddRange(new List<Stock.API.Models.Stock>
     {
-        Count = 10,
-        Id = 1,
-        ProductId = 1
-    },
-    new()
-    {
-        Count = 15,
-        Id = 2,
-        ProductId = 2
-    },
-    new()
-    {
-        Count = 20,
-        Id = 3,
-        ProductId = 3
-    },
-    new()
-    {
-        Count = 25,
-        Id = 4,
-        ProductId = 4
-    },
-    new()
-    {
-        Count = 30,
-        Id = 5,
-        ProductId = 5
-    },
-    new()
-    {
-        Count = 35,
-        Id = 6,
-        ProductId = 6
-    },
-    new()
-    {
-        Count = 40,
-        Id = 7,
-        ProductId = 7
-    },
-    new()
-    {
-        Count = 45,
-        Id = 8,
-        ProductId = 8
-    },
-    new()
-    {
-        Count = 50,
-        Id = 9,
-        ProductId = 9
-    },
-    new()
-    {
-        Count = 55,
-        Id = 10,
-        ProductId = 10
-    }
-});
+        new()
+        {
+            Count = 10,
+            ProductId = 1
+        },
+        new()
+        {
+            Count = 15,
+            ProductId = 2
+        },
+        new()
+        {
+            Count = 20,
+            ProductId = 3
+        },
+        new()
+        {
+            Count = 25,
+            ProductId = 4
+        },
+        new()
+        {
+            Count = 30,
+            ProductId = 5
+        },
+        new()
+        {
+            Count = 35,
+            ProductId = 6
+        },
+        new()
+        {
+            Count = 40,
+            ProductId = 7
+        },
+        new()
+        {
+            Count = 45,
+            ProductId = 8
+        },
+        new()
+        {
+            Count = 50,
+            ProductId = 9
+        },
+        new()
+        {
+            Count = 55,
+            ProductId = 10
+        }
+    });
+
+    context.SaveChanges();
+}
 
 app.AddEvent<OrderCreatedEvent, OrderCreatedEventHandler>();
 

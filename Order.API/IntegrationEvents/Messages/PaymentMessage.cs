@@ -1,4 +1,4 @@
-﻿namespace Order.API.IntegrationEvents.Events
+﻿namespace Order.API.IntegrationEvents.Messages
 {
     public class PaymentMessage
     {

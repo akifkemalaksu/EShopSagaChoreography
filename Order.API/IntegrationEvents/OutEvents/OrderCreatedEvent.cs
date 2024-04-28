@@ -1,6 +1,7 @@
 ﻿using EventBus.Events;
+using Order.API.IntegrationEvents.Messages;
 
-namespace Stock.API.IntegrationEvents.Events
+namespace Order.API.IntegrationEvents.OutEvents
 {
     public class OrderCreatedEvent:Event
     {
