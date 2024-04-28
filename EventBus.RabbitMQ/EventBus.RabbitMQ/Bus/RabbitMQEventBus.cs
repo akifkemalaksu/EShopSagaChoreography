@@ -30,6 +30,7 @@ namespace EventBus.RabbitMQ.Bus
 	/// </summary>
     public class RabbitMQEventBus : IEventBus
     {
+        // todo: dead letter exchange implementasyonu
         private const string _exchangeName = "saga_event_bus";
         private readonly string _queueName;
         private readonly int _publishRetryCount = 5;
