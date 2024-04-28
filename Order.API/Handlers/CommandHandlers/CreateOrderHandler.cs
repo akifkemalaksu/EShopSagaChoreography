@@ -4,7 +4,6 @@ using Mapster;
 using Order.API.Contexts;
 using Order.API.Dtos;
 using Order.API.IntegrationEvents.Events;
-using Order.API.IntegrationEvents.Messages;
 
 namespace Order.API.Handlers.CommandHandlers
 {

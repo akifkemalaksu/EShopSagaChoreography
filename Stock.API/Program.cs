@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Common.Extensions;
 using EventBus.RabbitMQ.Extensions;
 using Stock.API.Contexts;
+using Stock.API.IntegrationEvents.Events;
+using Stock.API.IntegrationEvents.EventHandlers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.ConfigureCQRSServices();
 
 builder.AddRabbitMQEventBus();
+builder.Services.AddTransient<OrderCreatedEventHandler>();
 
 var app = builder.Build();
 
@@ -105,5 +108,7 @@ context.Stocks.AddRange(new List<Stock.API.Models.Stock>
         ProductId = 10
     }
 });
+
+app.AddEvent<OrderCreatedEvent, OrderCreatedEventHandler>();
 
 app.Run();

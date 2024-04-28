@@ -16,6 +16,7 @@ using EventBus.RabbitMQ.Connection;
 using EventBus.Bus;
 using EventBus.Subscriptions;
 using EventBus.Events;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace EventBus.RabbitMQ.Bus
 {
@@ -259,7 +260,7 @@ namespace EventBus.RabbitMQ.Bus
 
                 var @event = JsonSerializer.Deserialize(message, eventType);
 
-                var eventHandlerType = typeof(IEventHandler<>).MakeGenericType();
+                var eventHandlerType = typeof(IEventHandler<>).MakeGenericType(eventType);
 
                 await Task.Yield();
 

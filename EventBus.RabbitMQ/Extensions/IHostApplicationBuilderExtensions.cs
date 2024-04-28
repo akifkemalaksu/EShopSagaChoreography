@@ -9,6 +9,8 @@ using EventBus.RabbitMQ.Settings;
 using EventBus.Subscriptions.InMemory;
 using EventBus.RabbitMQ.Bus;
 using EventBus.Bus;
+using EventBus.Events;
+using System.Reflection;
 
 namespace EventBus.RabbitMQ.Extensions
 {
