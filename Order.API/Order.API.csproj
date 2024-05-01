@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Handlers\QueryHandlers\" />
     <Folder Include="IntegrationEvents\EventHandlers\" />
     <Folder Include="IntegrationEvents\InEvents\" />
   </ItemGroup>

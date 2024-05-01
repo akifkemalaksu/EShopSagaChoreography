@@ -4,6 +4,7 @@ using EventBus.RabbitMQ.Extensions;
 using Stock.API.Contexts;
 using Stock.API.IntegrationEvents.EventHandlers;
 using Stock.API.IntegrationEvents.InEvents;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,12 +18,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-}, contextLifetime: ServiceLifetime.Transient, optionsLifetime: ServiceLifetime.Transient);
+});
 
 builder.Services.ConfigureCQRSServices();
 
 builder.AddRabbitMQEventBus();
-builder.Services.AddTransient<OrderCreatedEventHandler>();
+builder.Services.TryAddScoped<OrderCreatedEventHandler>();
 
 var app = builder.Build();
 

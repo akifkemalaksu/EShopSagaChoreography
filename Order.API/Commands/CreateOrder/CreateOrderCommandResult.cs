@@ -1,6 +1,6 @@
-﻿namespace Order.API.Dtos
+﻿namespace Order.API.Commands.CreateOrder
 {
-    public class CreateOrderResultDto
+    public class CreateOrderCommandResult
     {
         public int? OrderId { get; set; }
         public bool Status

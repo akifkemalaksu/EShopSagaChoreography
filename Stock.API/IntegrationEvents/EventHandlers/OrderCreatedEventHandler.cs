@@ -59,6 +59,8 @@ namespace Stock.API.IntegrationEvents.EventHandlers
             }
             else
             {
+                _logger.LogInformation("There is not enough stock. BuyerId: {BuyerId}, OrderId: {OrderId}", @event.BuyerId, @event.OrderId);
+
                 var stockNotReservedEvent = new StockNotReservedEvent()
                 {
                     OrderId = @event.OrderId,

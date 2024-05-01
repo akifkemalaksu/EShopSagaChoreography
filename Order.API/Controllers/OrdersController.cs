@@ -1,7 +1,7 @@
 ﻿using Common.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Order.API.Dtos;
+using Order.API.Commands.CreateOrder;
 
 namespace Order.API.Controllers
 {
@@ -17,9 +17,9 @@ namespace Order.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(CreateOrderDto createOrder,CancellationToken token)
+        public async Task<IActionResult> Post(CreateOrderCommand createOrder,CancellationToken token)
         {
-            var result = await _commandDispatcher.Dispatch<CreateOrderDto, CreateOrderResultDto>(createOrder, token);
+            var result = await _commandDispatcher.Dispatch<CreateOrderCommand, CreateOrderCommandResult>(createOrder, token);
             return Ok(result);
         }
     }
