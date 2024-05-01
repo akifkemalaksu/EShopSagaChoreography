@@ -246,9 +246,11 @@ namespace EventBus.RabbitMQ.Bus
 
             var subscriptions = _eventBusSubscriptionManager.GetHandlersForEvent(eventName);
 
+            using var scope = _serviceProvider.CreateScope();
+
             foreach (var subscription in subscriptions)
             {
-                var handler = _serviceProvider.GetService(subscription.HandlerType);
+                var handler = scope.ServiceProvider.GetService(subscription.HandlerType);
 
                 if (handler == null)
                 {
