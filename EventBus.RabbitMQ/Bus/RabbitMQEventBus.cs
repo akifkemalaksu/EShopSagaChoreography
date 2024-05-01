@@ -246,6 +246,7 @@ namespace EventBus.RabbitMQ.Bus
 
             var subscriptions = _eventBusSubscriptionManager.GetHandlersForEvent(eventName);
 
+            // Fixed "Cannot resolve scoped service from root provider" error
             using var scope = _serviceProvider.CreateScope();
 
             foreach (var subscription in subscriptions)
