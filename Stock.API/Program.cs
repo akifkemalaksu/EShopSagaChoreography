@@ -29,7 +29,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.ConfigureCQRSServices();
 
 builder.AddRabbitMQEventBus();
-builder.Services.TryAddScoped<OrderCreatedEventHandler>();
+builder.Services.AddScoped<OrderCreatedEventHandler>();
 
 var app = builder.Build();
 
@@ -57,42 +57,42 @@ if (!context.Stocks.Any())
     {
         new()
         {
-            Count = 10,
+            Count = 50,
             ProductId = 1
         },
         new()
         {
-            Count = 15,
+            Count = 50,
             ProductId = 2
         },
         new()
         {
-            Count = 20,
+            Count = 50,
             ProductId = 3
         },
         new()
         {
-            Count = 25,
+            Count = 50,
             ProductId = 4
         },
         new()
         {
-            Count = 30,
+            Count = 50,
             ProductId = 5
         },
         new()
         {
-            Count = 35,
+            Count = 50,
             ProductId = 6
         },
         new()
         {
-            Count = 40,
+            Count = 50,
             ProductId = 7
         },
         new()
         {
-            Count = 45,
+            Count = 50,
             ProductId = 8
         },
         new()
@@ -102,7 +102,7 @@ if (!context.Stocks.Any())
         },
         new()
         {
-            Count = 55,
+            Count = 50,
             ProductId = 10
         }
     });

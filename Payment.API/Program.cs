@@ -1,4 +1,7 @@
 using EventBus.RabbitMQ.Extensions;
+using Common.Extensions;
+using Payment.API.IntegrationEvents.InEvents;
+using Payment.API.IntegrationEvents.EventHandlers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +12,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.ConfigureCQRSServices();
+
 builder.AddRabbitMQEventBus();
+builder.Services.AddScoped<StockReservedEventHandler>();
 
 var app = builder.Build();
 
@@ -27,5 +33,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapGet("/", () => "Hello");
+
+app.AddEvent<StockReservedEvent, StockReservedEventHandler>();
 
 app.Run();

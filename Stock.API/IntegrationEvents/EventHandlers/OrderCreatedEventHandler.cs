@@ -35,7 +35,7 @@ namespace Stock.API.IntegrationEvents.EventHandlers
             {
                 foreach (var item in @event.OrderItems)
                 {
-                    var stock = await _appDbContext.Stocks.FirstOrDefaultAsync(x => x.Id == item.ProductId);
+                    var stock = await _appDbContext.Stocks.FirstOrDefaultAsync(x => x.ProductId == item.ProductId);
 
                     if (stock != null)
                         stock.Count -= item.Count;
