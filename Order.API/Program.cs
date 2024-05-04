@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Order.API.Contexts;
 using Common.Extensions;
 using EventBus.RabbitMQ.Extensions;
+using Order.API.IntegrationEvents.EventHandlers;
+using Order.API.IntegrationEvents.InEvents;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.ConfigureCQRSServices();
 
 builder.AddRabbitMQEventBus();
+builder.Services.AddScoped<PaymentCompletedEventHandler>();
+builder.Services.AddScoped<PaymentFailedEventHandler>();
+builder.Services.AddScoped<StockNotReservedEventHandler>();
 
 var app = builder.Build();
 
@@ -37,5 +42,9 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapGet("/", () => "Hello");
+
+app.AddEvent<PaymentCompletedEvent, PaymentCompletedEventHandler>();
+app.AddEvent<PaymentFailedEvent, PaymentFailedEventHandler>();
+app.AddEvent<StockNotReservedEvent, StockNotReservedEventHandler>();
 
 app.Run();

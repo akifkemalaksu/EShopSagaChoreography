@@ -24,7 +24,7 @@ namespace Payment.API.IntegrationEvents.EventHandlers
             {
                 _logger.LogInformation($"{@event.Payment.TotalPrice} TL was withdrawn from credit card for user id: {@event.BuyerId}");
 
-                var paymentSucceedEvent = new PaymentSucceedEvent
+                var paymentSucceedEvent = new PaymentCompletedEvent
                 {
                     BuyerId = @event.BuyerId,
                     OrderId = @event.OrderId,
@@ -40,7 +40,8 @@ namespace Payment.API.IntegrationEvents.EventHandlers
                 {
                     BuyerId = @event.BuyerId,
                     OrderId = @event.OrderId,
-                    Message = "Not enough balance."
+                    Message = "Not enough balance.",
+                    OrderItems = @event.OrderItems
                 };
 
                 _eventBus.Publish(paymentFailedEvent);

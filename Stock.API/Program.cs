@@ -15,12 +15,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//builder.Services.AddDbContext<AppDbContext>(options =>
-//{
-//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-//}, contextLifetime: ServiceLifetime.Transient, optionsLifetime: ServiceLifetime.Transient);
-
-
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -30,6 +24,7 @@ builder.Services.ConfigureCQRSServices();
 
 builder.AddRabbitMQEventBus();
 builder.Services.AddScoped<OrderCreatedEventHandler>();
+builder.Services.AddScoped<PaymentFailedEventHandler>();
 
 var app = builder.Build();
 
@@ -47,6 +42,9 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapGet("/", () => "Hello");
+
+app.AddEvent<OrderCreatedEvent, OrderCreatedEventHandler>();
+app.AddEvent<PaymentFailedEvent, PaymentFailedEventHandler>();
 
 using var scope = app.Services.CreateScope();
 
@@ -109,7 +107,5 @@ if (!context.Stocks.Any())
 
     context.SaveChanges();
 }
-
-app.AddEvent<OrderCreatedEvent, OrderCreatedEventHandler>();
 
 app.Run();

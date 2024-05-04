@@ -21,11 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="IntegrationEvents\EventHandlers\" />
-    <Folder Include="IntegrationEvents\InEvents\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\EventBus.RabbitMQ\EventBus.RabbitMQ.csproj" />
   </ItemGroup>

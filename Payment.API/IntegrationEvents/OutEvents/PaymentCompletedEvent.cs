@@ -2,7 +2,7 @@
 
 namespace Payment.API.IntegrationEvents.OutEvents
 {
-    public class PaymentSucceedEvent : Event
+    public class PaymentCompletedEvent : Event
     {
         public int OrderId { get; set; }
         public string BuyerId { get; set; }

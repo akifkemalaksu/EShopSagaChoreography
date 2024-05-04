@@ -1,7 +1,7 @@
 ﻿using EventBus.Events;
-using Payment.API.IntegrationEvents.Messages;
+using Stock.API.IntegrationEvents.Messages;
 
-namespace Payment.API.IntegrationEvents.OutEvents
+namespace Stock.API.IntegrationEvents.InEvents
 {
     public class PaymentFailedEvent : Event
     {
